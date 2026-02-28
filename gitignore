@@ -1,0 +1,20 @@
+# 数据与模型
+data/
+models/
+logs/
+
+# 环境与IDE
+venv/
+.env
+*.pyc
+__pycache__/
+.DS_Store
+.vscode/
+.idea/
+
+# 笔记本检查点
+.notebooks/
+*.ipynb_checkpoints/
+
+# 流缓存
+.streamlit/
