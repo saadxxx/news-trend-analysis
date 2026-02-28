@@ -49,8 +49,8 @@ Prerequisites
 Installation
 
 1. Clone the repository
-git clone https://github.com/[Your_Github_Username]/news-ai-trend-analysis.git
-cd news-ai-trend-analysis
+git clone https://github.com/saadxxx/news-trend-analysis.git
+cd news-trend-analysis
 
 
 2. Create and activate a virtual environment
