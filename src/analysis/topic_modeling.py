@@ -1,5 +1,6 @@
 """
 主题建模模块：支持LDA和BERTopic。
+Topic Modeling Module: Supports LDA and BERTopic.
 """
 from gensim import corpora, models
 from bertopic import BERTopic
