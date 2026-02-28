@@ -120,6 +120,44 @@ streamlit run src/visualization/app.py
 
 🎯 Project Demo
 
+## 📊 可视化结果示例
+
+### 主题词云
+![主题词云](docs/images/wordcloud.png)
+*基于2025年1月新闻数据生成的主题词云，显示AI、监管、气候等高频话题*
+
+### 趋势热力图
+![趋势热力图](docs/images/trend_heatmap.png)
+*话题热度随时间变化的热力图，颜色越深表示讨论热度越高*
+
+### 情感时间线
+![情感时间线](docs/images/sentiment_timeline.png)
+*新闻情感分数随时间变化趋势，蓝色线为情感分数，橙色柱为文章数量*
+
+### 话题分布
+![话题分布](docs/images/topic_distribution.png)
+*话题分布气泡图，大小表示文章数量，颜色表示平均情感（红负绿正）*
+
+### 仪表板预览
+![仪表板预览](docs/images/dashboard_preview.png)
+*Streamlit交互式仪表板布局预览*
+
+## 📈 示例分析结论
+
+以下是对2024年1月国际新闻数据的自动分析示例：
+
+**核心发现：**
+1. **主导话题**: AI监管与伦理（320篇文章，热度上升45%）
+2. **情感倾向**: 整体略微正面（+0.15），气候话题最积极（+0.60）
+3. **关键事件**: 欧盟AI法案通过引发监管话题热度峰值
+4. **趋势变化**: 芯片竞争话题情感在1月5日后转为显著负面
+
+**详细分析报告**: [查看完整示例报告](docs/demo_results/text_conclusions.md)
+
+## 🎥 交互演示
+![仪表板演示](docs/images/dashboard_demo.gif)
+*实际Streamlit应用的交互演示 - 选择话题、调整时间范围、查看详细分析*
+
 Sample Output
 
 !docs/images/dashboard_screenshot.png
