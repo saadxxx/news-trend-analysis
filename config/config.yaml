@@ -1,0 +1,25 @@
+# 项目配置
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  outputs_dir: "data/outputs"
+
+model:
+  default_method: "bertopic"
+  lda:
+    num_topics: 10
+    passes: 15
+  bertopic:
+    embedding_model: "all-MiniLM-L6-v2"
+    min_topic_size: 10
+
+scraping:
+  delay_seconds: 1
+  max_articles_per_source: 50
+  user_agents:
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+
+logging:
+  level: "INFO"
+  file: "logs/pipeline.log"
