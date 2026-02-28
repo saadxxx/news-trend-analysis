@@ -1,0 +1,916 @@
+{
+  "metadata": {
+    "generated_at": "2026-02-28T20:04:40.450637",
+    "time_period": "2024-01-01 to 2024-01-31",
+    "total_articles_analyzed": 1250,
+    "data_sources": [
+      "Reuters",
+      "BBC",
+      "CNN",
+      "TechCrunch",
+      "华尔街日报"
+    ]
+  },
+  "topics": [
+    {
+      "topic_id": 0,
+      "topic_name": "AI监管与伦理",
+      "keywords": [
+        "AI",
+        "监管",
+        "伦理",
+        "政策",
+        "算法",
+        "透明度"
+      ],
+      "article_count": 320,
+      "avg_sentiment": 0.2,
+      "trend": "rising",
+      "key_articles": [
+        {
+          "title": "欧盟通过全球首部AI监管法案",
+          "source": "Reuters",
+          "date": "2024-01-15",
+          "sentiment": 0.3,
+          "summary": "欧盟议会正式通过《人工智能法案》，为全球AI监管树立新标杆。"
+        },
+        {
+          "title": "科技巨头承诺负责任AI开发",
+          "source": "TechCrunch",
+          "date": "2024-01-20",
+          "sentiment": 0.5,
+          "summary": "多家科技公司签署AI伦理协议，承诺加强算法透明度。"
+        }
+      ]
+    },
+    {
+      "topic_id": 1,
+      "topic_name": "气候变化政策",
+      "keywords": [
+        "气候",
+        "环保",
+        "能源",
+        "可持续",
+        "减排",
+        "碳中和"
+      ],
+      "article_count": 280,
+      "avg_sentiment": 0.6,
+      "trend": "stable",
+      "key_articles": [
+        {
+          "title": "COP29气候大会达成历史性协议",
+          "source": "BBC",
+          "date": "2024-01-10",
+          "sentiment": 0.8,
+          "summary": "各国承诺加大减排力度，设立新的气候基金。"
+        }
+      ]
+    },
+    {
+      "topic_id": 2,
+      "topic_name": "全球芯片竞争",
+      "keywords": [
+        "芯片",
+        "半导体",
+        "技术",
+        "竞争",
+        "制造",
+        "供应链"
+      ],
+      "article_count": 240,
+      "avg_sentiment": -0.3,
+      "trend": "rising",
+      "key_articles": [
+        {
+          "title": "美国扩大对华芯片出口限制",
+          "source": "华尔街日报",
+          "date": "2024-01-05",
+          "sentiment": -0.5,
+          "summary": "美国政府宣布新的芯片出口管制措施，引发市场担忧。"
+        }
+      ]
+    }
+  ],
+  "daily_trends": [
+    {
+      "date": "2024-01-01",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.558,
+      "article_count": 11
+    },
+    {
+      "date": "2024-01-01",
+      "topic": "气候变化政策",
+      "heat_score": 0.448,
+      "article_count": 7
+    },
+    {
+      "date": "2024-01-01",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.519,
+      "article_count": 19
+    },
+    {
+      "date": "2024-01-02",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.361,
+      "article_count": 15
+    },
+    {
+      "date": "2024-01-02",
+      "topic": "气候变化政策",
+      "heat_score": 0.317,
+      "article_count": 17
+    },
+    {
+      "date": "2024-01-02",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.516,
+      "article_count": 15
+    },
+    {
+      "date": "2024-01-03",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.519,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-03",
+      "topic": "气候变化政策",
+      "heat_score": 0.403,
+      "article_count": 10
+    },
+    {
+      "date": "2024-01-03",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.672,
+      "article_count": 18
+    },
+    {
+      "date": "2024-01-04",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.702,
+      "article_count": 5
+    },
+    {
+      "date": "2024-01-04",
+      "topic": "气候变化政策",
+      "heat_score": 0.685,
+      "article_count": 8
+    },
+    {
+      "date": "2024-01-04",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.638,
+      "article_count": 6
+    },
+    {
+      "date": "2024-01-05",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.633,
+      "article_count": 7
+    },
+    {
+      "date": "2024-01-05",
+      "topic": "气候变化政策",
+      "heat_score": 0.573,
+      "article_count": 7
+    },
+    {
+      "date": "2024-01-05",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.57,
+      "article_count": 18
+    },
+    {
+      "date": "2024-01-06",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.587,
+      "article_count": 19
+    },
+    {
+      "date": "2024-01-06",
+      "topic": "气候变化政策",
+      "heat_score": 0.573,
+      "article_count": 10
+    },
+    {
+      "date": "2024-01-06",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.534,
+      "article_count": 16
+    },
+    {
+      "date": "2024-01-07",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.565,
+      "article_count": 16
+    },
+    {
+      "date": "2024-01-07",
+      "topic": "气候变化政策",
+      "heat_score": 0.368,
+      "article_count": 6
+    },
+    {
+      "date": "2024-01-07",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.356,
+      "article_count": 14
+    },
+    {
+      "date": "2024-01-08",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.661,
+      "article_count": 18
+    },
+    {
+      "date": "2024-01-08",
+      "topic": "气候变化政策",
+      "heat_score": 0.587,
+      "article_count": 8
+    },
+    {
+      "date": "2024-01-08",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.464,
+      "article_count": 19
+    },
+    {
+      "date": "2024-01-09",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.648,
+      "article_count": 5
+    },
+    {
+      "date": "2024-01-09",
+      "topic": "气候变化政策",
+      "heat_score": 0.599,
+      "article_count": 18
+    },
+    {
+      "date": "2024-01-09",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.447,
+      "article_count": 11
+    },
+    {
+      "date": "2024-01-10",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.784,
+      "article_count": 15
+    },
+    {
+      "date": "2024-01-10",
+      "topic": "气候变化政策",
+      "heat_score": 0.711,
+      "article_count": 6
+    },
+    {
+      "date": "2024-01-10",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.575,
+      "article_count": 12
+    },
+    {
+      "date": "2024-01-11",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.768,
+      "article_count": 7
+    },
+    {
+      "date": "2024-01-11",
+      "topic": "气候变化政策",
+      "heat_score": 0.339,
+      "article_count": 14
+    },
+    {
+      "date": "2024-01-11",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.416,
+      "article_count": 12
+    },
+    {
+      "date": "2024-01-12",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.655,
+      "article_count": 12
+    },
+    {
+      "date": "2024-01-12",
+      "topic": "气候变化政策",
+      "heat_score": 0.557,
+      "article_count": 8
+    },
+    {
+      "date": "2024-01-12",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.667,
+      "article_count": 18
+    },
+    {
+      "date": "2024-01-13",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.446,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-13",
+      "topic": "气候变化政策",
+      "heat_score": 0.6,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-13",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.477,
+      "article_count": 7
+    },
+    {
+      "date": "2024-01-14",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.613,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-14",
+      "topic": "气候变化政策",
+      "heat_score": 0.703,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-14",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.546,
+      "article_count": 13
+    },
+    {
+      "date": "2024-01-15",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.454,
+      "article_count": 8
+    },
+    {
+      "date": "2024-01-15",
+      "topic": "气候变化政策",
+      "heat_score": 0.513,
+      "article_count": 7
+    },
+    {
+      "date": "2024-01-15",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.543,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-16",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.804,
+      "article_count": 13
+    },
+    {
+      "date": "2024-01-16",
+      "topic": "气候变化政策",
+      "heat_score": 0.451,
+      "article_count": 11
+    },
+    {
+      "date": "2024-01-16",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.669,
+      "article_count": 18
+    },
+    {
+      "date": "2024-01-17",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.484,
+      "article_count": 11
+    },
+    {
+      "date": "2024-01-17",
+      "topic": "气候变化政策",
+      "heat_score": 0.636,
+      "article_count": 11
+    },
+    {
+      "date": "2024-01-17",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.665,
+      "article_count": 10
+    },
+    {
+      "date": "2024-01-18",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.528,
+      "article_count": 5
+    },
+    {
+      "date": "2024-01-18",
+      "topic": "气候变化政策",
+      "heat_score": 0.662,
+      "article_count": 8
+    },
+    {
+      "date": "2024-01-18",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.637,
+      "article_count": 12
+    },
+    {
+      "date": "2024-01-19",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.535,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-19",
+      "topic": "气候变化政策",
+      "heat_score": 0.432,
+      "article_count": 18
+    },
+    {
+      "date": "2024-01-19",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.485,
+      "article_count": 11
+    },
+    {
+      "date": "2024-01-20",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.909,
+      "article_count": 6
+    },
+    {
+      "date": "2024-01-20",
+      "topic": "气候变化政策",
+      "heat_score": 0.318,
+      "article_count": 12
+    },
+    {
+      "date": "2024-01-20",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.809,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-21",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.95,
+      "article_count": 14
+    },
+    {
+      "date": "2024-01-21",
+      "topic": "气候变化政策",
+      "heat_score": 0.338,
+      "article_count": 13
+    },
+    {
+      "date": "2024-01-21",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.597,
+      "article_count": 10
+    },
+    {
+      "date": "2024-01-22",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.73,
+      "article_count": 13
+    },
+    {
+      "date": "2024-01-22",
+      "topic": "气候变化政策",
+      "heat_score": 0.524,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-22",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.525,
+      "article_count": 17
+    },
+    {
+      "date": "2024-01-23",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.705,
+      "article_count": 10
+    },
+    {
+      "date": "2024-01-23",
+      "topic": "气候变化政策",
+      "heat_score": 0.347,
+      "article_count": 8
+    },
+    {
+      "date": "2024-01-23",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.663,
+      "article_count": 12
+    },
+    {
+      "date": "2024-01-24",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.784,
+      "article_count": 18
+    },
+    {
+      "date": "2024-01-24",
+      "topic": "气候变化政策",
+      "heat_score": 0.611,
+      "article_count": 11
+    },
+    {
+      "date": "2024-01-24",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.581,
+      "article_count": 6
+    },
+    {
+      "date": "2024-01-25",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.728,
+      "article_count": 5
+    },
+    {
+      "date": "2024-01-25",
+      "topic": "气候变化政策",
+      "heat_score": 0.495,
+      "article_count": 13
+    },
+    {
+      "date": "2024-01-25",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.592,
+      "article_count": 8
+    },
+    {
+      "date": "2024-01-26",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.576,
+      "article_count": 17
+    },
+    {
+      "date": "2024-01-26",
+      "topic": "气候变化政策",
+      "heat_score": 0.329,
+      "article_count": 7
+    },
+    {
+      "date": "2024-01-26",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.917,
+      "article_count": 16
+    },
+    {
+      "date": "2024-01-27",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.881,
+      "article_count": 11
+    },
+    {
+      "date": "2024-01-27",
+      "topic": "气候变化政策",
+      "heat_score": 0.602,
+      "article_count": 15
+    },
+    {
+      "date": "2024-01-27",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.629,
+      "article_count": 17
+    },
+    {
+      "date": "2024-01-28",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.574,
+      "article_count": 10
+    },
+    {
+      "date": "2024-01-28",
+      "topic": "气候变化政策",
+      "heat_score": 0.67,
+      "article_count": 12
+    },
+    {
+      "date": "2024-01-28",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.812,
+      "article_count": 8
+    },
+    {
+      "date": "2024-01-29",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.776,
+      "article_count": 17
+    },
+    {
+      "date": "2024-01-29",
+      "topic": "气候变化政策",
+      "heat_score": 0.452,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-29",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.836,
+      "article_count": 8
+    },
+    {
+      "date": "2024-01-30",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.915,
+      "article_count": 14
+    },
+    {
+      "date": "2024-01-30",
+      "topic": "气候变化政策",
+      "heat_score": 0.375,
+      "article_count": 9
+    },
+    {
+      "date": "2024-01-30",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.858,
+      "article_count": 11
+    },
+    {
+      "date": "2024-01-31",
+      "topic": "AI监管与伦理",
+      "heat_score": 0.712,
+      "article_count": 18
+    },
+    {
+      "date": "2024-01-31",
+      "topic": "气候变化政策",
+      "heat_score": 0.573,
+      "article_count": 15
+    },
+    {
+      "date": "2024-01-31",
+      "topic": "全球芯片竞争",
+      "heat_score": 0.941,
+      "article_count": 12
+    }
+  ],
+  "sentiment_analysis": [
+    {
+      "date": "2024-01-01",
+      "avg_sentiment": -0.019,
+      "positive_ratio": 0.494,
+      "negative_ratio": 0.304,
+      "neutral_ratio": 0.202,
+      "total_articles": 129
+    },
+    {
+      "date": "2024-01-02",
+      "avg_sentiment": 0.082,
+      "positive_ratio": 0.525,
+      "negative_ratio": 0.284,
+      "neutral_ratio": 0.192,
+      "total_articles": 98
+    },
+    {
+      "date": "2024-01-03",
+      "avg_sentiment": 0.283,
+      "positive_ratio": 0.585,
+      "negative_ratio": 0.243,
+      "neutral_ratio": 0.172,
+      "total_articles": 81
+    },
+    {
+      "date": "2024-01-04",
+      "avg_sentiment": 0.176,
+      "positive_ratio": 0.553,
+      "negative_ratio": 0.265,
+      "neutral_ratio": 0.182,
+      "total_articles": 105
+    },
+    {
+      "date": "2024-01-05",
+      "avg_sentiment": 0.301,
+      "positive_ratio": 0.59,
+      "negative_ratio": 0.24,
+      "neutral_ratio": 0.17,
+      "total_articles": 107
+    },
+    {
+      "date": "2024-01-06",
+      "avg_sentiment": 0.339,
+      "positive_ratio": 0.602,
+      "negative_ratio": 0.232,
+      "neutral_ratio": 0.166,
+      "total_articles": 144
+    },
+    {
+      "date": "2024-01-07",
+      "avg_sentiment": 0.556,
+      "positive_ratio": 0.667,
+      "negative_ratio": 0.189,
+      "neutral_ratio": 0.144,
+      "total_articles": 108
+    },
+    {
+      "date": "2024-01-08",
+      "avg_sentiment": 0.593,
+      "positive_ratio": 0.678,
+      "negative_ratio": 0.181,
+      "neutral_ratio": 0.141,
+      "total_articles": 133
+    },
+    {
+      "date": "2024-01-09",
+      "avg_sentiment": 0.422,
+      "positive_ratio": 0.627,
+      "negative_ratio": 0.216,
+      "neutral_ratio": 0.158,
+      "total_articles": 133
+    },
+    {
+      "date": "2024-01-10",
+      "avg_sentiment": 0.415,
+      "positive_ratio": 0.624,
+      "negative_ratio": 0.217,
+      "neutral_ratio": 0.159,
+      "total_articles": 144
+    },
+    {
+      "date": "2024-01-11",
+      "avg_sentiment": 0.382,
+      "positive_ratio": 0.615,
+      "negative_ratio": 0.224,
+      "neutral_ratio": 0.162,
+      "total_articles": 123
+    },
+    {
+      "date": "2024-01-12",
+      "avg_sentiment": 0.321,
+      "positive_ratio": 0.596,
+      "negative_ratio": 0.236,
+      "neutral_ratio": 0.168,
+      "total_articles": 104
+    },
+    {
+      "date": "2024-01-13",
+      "avg_sentiment": 0.313,
+      "positive_ratio": 0.594,
+      "negative_ratio": 0.237,
+      "neutral_ratio": 0.169,
+      "total_articles": 147
+    },
+    {
+      "date": "2024-01-14",
+      "avg_sentiment": 0.27,
+      "positive_ratio": 0.581,
+      "negative_ratio": 0.246,
+      "neutral_ratio": 0.173,
+      "total_articles": 144
+    },
+    {
+      "date": "2024-01-15",
+      "avg_sentiment": 0.206,
+      "positive_ratio": 0.562,
+      "negative_ratio": 0.259,
+      "neutral_ratio": 0.179,
+      "total_articles": 90
+    },
+    {
+      "date": "2024-01-16",
+      "avg_sentiment": 0.115,
+      "positive_ratio": 0.535,
+      "negative_ratio": 0.277,
+      "neutral_ratio": 0.188,
+      "total_articles": 129
+    },
+    {
+      "date": "2024-01-17",
+      "avg_sentiment": -0.205,
+      "positive_ratio": 0.438,
+      "negative_ratio": 0.341,
+      "neutral_ratio": 0.221,
+      "total_articles": 117
+    },
+    {
+      "date": "2024-01-18",
+      "avg_sentiment": -0.234,
+      "positive_ratio": 0.43,
+      "negative_ratio": 0.347,
+      "neutral_ratio": 0.223,
+      "total_articles": 137
+    },
+    {
+      "date": "2024-01-19",
+      "avg_sentiment": -0.463,
+      "positive_ratio": 0.361,
+      "negative_ratio": 0.393,
+      "neutral_ratio": 0.246,
+      "total_articles": 146
+    },
+    {
+      "date": "2024-01-20",
+      "avg_sentiment": -0.154,
+      "positive_ratio": 0.454,
+      "negative_ratio": 0.331,
+      "neutral_ratio": 0.215,
+      "total_articles": 84
+    },
+    {
+      "date": "2024-01-21",
+      "avg_sentiment": -0.359,
+      "positive_ratio": 0.392,
+      "negative_ratio": 0.372,
+      "neutral_ratio": 0.236,
+      "total_articles": 120
+    },
+    {
+      "date": "2024-01-22",
+      "avg_sentiment": -0.433,
+      "positive_ratio": 0.37,
+      "negative_ratio": 0.387,
+      "neutral_ratio": 0.243,
+      "total_articles": 123
+    },
+    {
+      "date": "2024-01-23",
+      "avg_sentiment": -0.537,
+      "positive_ratio": 0.339,
+      "negative_ratio": 0.407,
+      "neutral_ratio": 0.254,
+      "total_articles": 104
+    },
+    {
+      "date": "2024-01-24",
+      "avg_sentiment": -0.386,
+      "positive_ratio": 0.384,
+      "negative_ratio": 0.377,
+      "neutral_ratio": 0.239,
+      "total_articles": 118
+    },
+    {
+      "date": "2024-01-25",
+      "avg_sentiment": -0.49,
+      "positive_ratio": 0.353,
+      "negative_ratio": 0.398,
+      "neutral_ratio": 0.249,
+      "total_articles": 92
+    },
+    {
+      "date": "2024-01-26",
+      "avg_sentiment": -0.41,
+      "positive_ratio": 0.377,
+      "negative_ratio": 0.382,
+      "neutral_ratio": 0.241,
+      "total_articles": 120
+    },
+    {
+      "date": "2024-01-27",
+      "avg_sentiment": -0.251,
+      "positive_ratio": 0.425,
+      "negative_ratio": 0.35,
+      "neutral_ratio": 0.225,
+      "total_articles": 124
+    },
+    {
+      "date": "2024-01-28",
+      "avg_sentiment": -0.461,
+      "positive_ratio": 0.362,
+      "negative_ratio": 0.392,
+      "neutral_ratio": 0.246,
+      "total_articles": 105
+    },
+    {
+      "date": "2024-01-29",
+      "avg_sentiment": -0.383,
+      "positive_ratio": 0.385,
+      "negative_ratio": 0.377,
+      "neutral_ratio": 0.238,
+      "total_articles": 86
+    },
+    {
+      "date": "2024-01-30",
+      "avg_sentiment": -0.202,
+      "positive_ratio": 0.439,
+      "negative_ratio": 0.34,
+      "neutral_ratio": 0.22,
+      "total_articles": 80
+    },
+    {
+      "date": "2024-01-31",
+      "avg_sentiment": -0.183,
+      "positive_ratio": 0.445,
+      "negative_ratio": 0.337,
+      "neutral_ratio": 0.218,
+      "total_articles": 147
+    }
+  ],
+  "summary": {
+    "dominant_topic": "AI监管与伦理",
+    "most_positive_topic": "气候变化政策",
+    "most_negative_topic": "全球芯片竞争",
+    "overall_sentiment": "slightly_positive",
+    "key_insights": [
+      "AI监管话题热度持续上升，反映政策关注度增加",
+      "气候话题情感最为积极，显示公众乐观态度",
+      "芯片竞争话题负面情感突出，反映地缘政治紧张"
+    ]
+  }
+}
