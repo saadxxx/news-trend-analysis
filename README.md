@@ -1,8 +1,5 @@
 News Trend Analysis and Topic Modelling Pipeline
 
-https://img.shields.io/badge/Python-3.8%2B-blue](https://www.python.org/)
-https://img.shields.io/badge/License-MIT-green](LICENSE)
-https://img.shields.io/badge/Framework-Streamlit-FF4B4B](https://streamlit.io/)
 
 An end-to-end machine learning pipeline that automatically collects news data, identifies evolving topics, and analyzes sentiment trends over time. This project demonstrates a complete workflow from data ingestion to interactive visualization, built to explore the intersection of computational journalism and AI.
 
@@ -254,3 +251,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Built with passion for AI and storytelling 
 
 This project supports my application to the MSc in Computer Science, demonstrating my commitment to bridging technology and media through responsible AI.
+
+
+https://img.shields.io/badge/Python-3.8%2B-blue](https://www.python.org/)
+https://img.shields.io/badge/License-MIT-green](LICENSE)
+https://img.shields.io/badge/Framework-Streamlit-FF4B4B](https://streamlit.io/)
