@@ -1,5 +1,5 @@
 """
-文本去重模块：基于相似性检测移除重复或高度相似的新闻。
+Text deduplication module: Remove duplicate or highly similar news articles based on similarity detection.
 """
 from dataclasses import dataclass
 from typing import List, Tuple, Set
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class NewsArticle:
-    """新闻文章数据类"""
+    """News article data class"""
     title: str
     content: str
     source: str
@@ -28,14 +28,14 @@ class NewsArticle:
             ).hexdigest()[:8]
 
 class Deduplicator:
-    """新闻去重器"""
+    """News deduplicator"""
     
     def __init__(self, similarity_threshold: float = 0.8):
         """
-        初始化去重器
+        Initialize deduplicator
         
-        参数:
-            similarity_threshold: 相似度阈值，高于此值视为重复
+        Args:
+            similarity_threshold: Similarity threshold, above which articles are considered duplicates
         """
         self.threshold = similarity_threshold
         self.vectorizer = TfidfVectorizer(
@@ -46,30 +46,30 @@ class Deduplicator:
     
     def find_duplicates(self, articles: List[NewsArticle]) -> List[Set[str]]:
         """
-        识别重复文章组
+        Identify duplicate article groups
         
-        参数:
-            articles: NewsArticle对象列表
+        Args:
+            articles: List of NewsArticle objects
             
-        返回:
-            List[Set[str]]: 每组重复文章的ID集合列表
+        Returns:
+            List[Set[str]]: List of article ID sets for each duplicate group
         """
         if len(articles) <= 1:
             return []
         
-        # 提取文本内容（标题+内容的前100字符）
+        # Extract text content (title + first 100 characters of content)
         texts = [
             f"{article.title} {article.content[:100]}" 
             for article in articles
         ]
         
-        # 计算TF-IDF向量
+        # Calculate TF-IDF vectors
         tfidf_matrix = self.vectorizer.fit_transform(texts)
         
-        # 计算余弦相似度矩阵
+        # Calculate cosine similarity matrix
         similarity_matrix = cosine_similarity(tfidf_matrix)
         
-        # 识别重复组
+        # Identify duplicate groups
         duplicate_groups = []
         visited = set()
         
@@ -77,7 +77,7 @@ class Deduplicator:
             if i in visited:
                 continue
                 
-            # 找到与文章i相似度高于阈值的所有文章
+            # Find all articles with similarity above threshold to article i
             duplicates = {i}
             for j in range(i + 1, len(articles)):
                 if similarity_matrix[i, j] >= self.threshold:
@@ -85,7 +85,7 @@ class Deduplicator:
                     visited.add(j)
             
             if len(duplicates) > 1:
-                # 转换为文章ID集合
+                # Convert to article ID set
                 article_ids = {articles[idx].article_id for idx in duplicates}
                 duplicate_groups.append(article_ids)
                 visited.update(duplicates)
@@ -94,53 +94,53 @@ class Deduplicator:
     
     def remove_duplicates(self, articles: List[NewsArticle]) -> Tuple[List[NewsArticle], List[Set[str]]]:
         """
-        移除重复文章，保留每个组中最早的一篇
+        Remove duplicate articles, keeping the earliest one in each group
         
-        参数:
-            articles: NewsArticle对象列表
+        Args:
+            articles: List of NewsArticle objects
             
-        返回:
-            Tuple: (去重后的文章列表, 重复组列表)
+        Returns:
+            Tuple: (Deduplicated article list, duplicate group list)
         """
         duplicate_groups = self.find_duplicates(articles)
         
         if not duplicate_groups:
             return articles, []
         
-        # 创建文章ID到索引的映射
+        # Create mapping from article ID to index
         id_to_index = {article.article_id: i for i, article in enumerate(articles)}
         
-        # 确定要保留的文章
+        # Determine which articles to keep
         articles_to_keep = set(range(len(articles)))
         articles_to_remove = set()
         
         for group in duplicate_groups:
-            # 转换为索引
+            # Convert to indices
             indices = [id_to_index[article_id] for article_id in group]
             
-            # 按日期排序，保留最早的
+            # Sort by date, keep the earliest
             sorted_indices = sorted(
                 indices, 
                 key=lambda idx: articles[idx].date
             )
             
-            # 保留最早的文章，移除其他
+            # Keep the earliest article, remove others
             articles_to_keep.difference_update(sorted_indices[1:])
             articles_to_remove.update(sorted_indices[1:])
         
-        # 构建结果
+        # Build result
         filtered_articles = [
             articles[i] for i in sorted(articles_to_keep)
         ]
         
-        logger.info(f"去重完成: 原始 {len(articles)} 篇, 去重后 {len(filtered_articles)} 篇")
+        logger.info(f"Deduplication completed: Original {len(articles)} articles, After deduplication {len(filtered_articles)} articles")
         
         return filtered_articles, duplicate_groups
 
 
-# 使用示例
+# Usage example
 if __name__ == "__main__":
-    # 创建示例文章
+    # Create sample articles
     articles = [
         NewsArticle(
             title="Breaking News: Important Event",
@@ -168,6 +168,6 @@ if __name__ == "__main__":
     deduplicator = Deduplicator(similarity_threshold=0.7)
     unique_articles, duplicates = deduplicator.remove_duplicates(articles)
     
-    print(f"原始文章数: {len(articles)}")
-    print(f"去重后文章数: {len(unique_articles)}")
-    print(f"发现重复组: {duplicates}")
+    print(f"Original article count: {len(articles)}")
+    print(f"Deduplicated article count: {len(unique_articles)}")
+    print(f"Duplicate groups found: {duplicates}")
