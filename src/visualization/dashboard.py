@@ -1,5 +1,5 @@
 """
-Streamlit新闻趋势分析仪表板 - 主应用
+Streamlit News Trend Analysis Dashboard - Main Application
 """
 import streamlit as st
 import pandas as pd
@@ -10,143 +10,259 @@ import json
 from pathlib import Path
 import sys
 from typing import Optional
+import numpy as np
+import os
+import logging
+from src.visualization.plot_generator import VisualizationGenerator
 
-# 添加项目根目录到Python路径
+
+# 定义 setup_logger 函数（添加到 dashboard.py 开头）
+def setup_logger(name, log_level=logging.INFO):
+    """
+    创建并配置一个标准化的 logger 实例
+    :param name: logger 名称
+    :param log_level: 日志级别（默认 INFO）
+    :return: 配置好的 logger 对象
+    """
+    # 创建 logger
+    logger = logging.getLogger(name)
+    logger.setLevel(log_level)
+    
+    # 避免重复添加处理器
+    if logger.handlers:
+        return logger
+    
+    # 定义日志格式
+    log_format = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+    
+    # 1. 控制台处理器
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(log_format)
+    logger.addHandler(console_handler)
+    
+    # 2. 文件处理器（可选，日志保存到文件）
+    log_dir = "logs"
+    os.makedirs(log_dir, exist_ok=True)
+    log_file = os.path.join(log_dir, f"{name}_{datetime.now().strftime('%Y%m%d')}.log")
+    file_handler = logging.FileHandler(log_file, encoding="utf-8")
+    file_handler.setFormatter(log_format)
+    logger.addHandler(file_handler)
+    
+    return logger
+
+# 原有代码（第40行）
+logger = setup_logger("dashboard")
+
+# 定义 generate_demo_results 函数
+def generate_demo_results():
+    """
+    生成演示用的可视化结果（适配你的新闻趋势分析项目）
+    功能：创建示例数据 → 调用可视化生成器 → 生成并保存各类图表
+    """
+    logger.info("开始生成演示可视化结果...")  # 使用之前配置的logger
+    
+    # 确保输出目录存在
+    output_dir = "docs/images"
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # 创建可视化生成器实例
+    viz = VisualizationGenerator()
+    
+    try:
+        # 1. 生成示例词频数据（词云用）
+        word_freq = {
+            'AI': 150, '人工智能': 120, '机器学习': 100,
+            '大数据': 80, '深度学习': 70, '自然语言处理': 60
+        }
+        wordcloud_path = viz.generate_wordcloud(word_freq, title="News Topic Word Cloud")
+        logger.info(f"词云图生成完成：{wordcloud_path}")
+        
+        # 2. 生成示例趋势数据（热力图用）
+        dates = pd.date_range('2024-01-01', periods=10, freq='D')
+        topic_trends = pd.DataFrame(
+            np.random.rand(10, 5),
+            index=dates,
+            columns=[f'Topic_{i}' for i in range(5)]
+        )
+        heatmap_path = viz.generate_trend_heatmap(topic_trends)
+        logger.info(f"趋势热力图生成完成：{heatmap_path}")
+        
+        # 3. 生成示例情感数据（时间线用）
+        sentiment_data = pd.DataFrame({
+            'date': pd.date_range('2024-01-01', periods=10, freq='D'),
+            'sentiment_score': np.random.uniform(-1, 1, 10),
+            'article_count': np.random.randint(50, 200, 10)
+        })
+        timeline_path = viz.generate_sentiment_timeline(sentiment_data)
+        logger.info(f"情感时间线生成完成：{timeline_path}")
+        
+        # 4. 生成示例话题数据（分布图表用）
+        topic_data = pd.DataFrame({
+            'topic_name': [f'Topic_{i}' for i in range(5)],
+            'article_count': np.random.randint(100, 500, 5),
+            'avg_sentiment': np.random.uniform(-0.5, 0.5, 5)
+        })
+        distribution_path = viz.generate_topic_distribution(topic_data)
+        logger.info(f"话题分布图生成完成：{distribution_path}")
+        
+        logger.info("所有演示可视化结果生成完成！")
+        return {
+            "wordcloud": wordcloud_path,
+            "heatmap": heatmap_path,
+            "timeline": timeline_path,
+            "distribution": distribution_path
+        }
+    
+    except Exception as e:
+        logger.error(f"生成演示结果失败：{str(e)}", exc_info=True)
+        raise  # 抛出异常，方便排查问题
+
+# 原有代码第682行
+generate_demo_results()
+
+if os.name == 'nt':  # Windows
+    # Force UTF-8 encoding
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
+# Add project root directory to Python path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
-# 设置页面配置（必须放在最前面）
+# Set page configuration (must be at the beginning)
 st.set_page_config(
-    page_title="新闻趋势分析仪表板",
+    page_title="News Trend Analysis Dashboard",
     page_icon="📈",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# 导入项目模块
+# Import project modules
 try:
     from src.utils.logger import setup_logger
     from src.visualization.plot_generator import VisualizationGenerator
 except ImportError as e:
-    st.warning(f"某些模块导入失败: {e}")
-    st.info("建议在项目根目录运行: `pip install -r requirements.txt`")
+    st.warning(f"Some modules failed to import: {e}")
+    st.info("Suggested to run in project root directory: `pip install -r requirements.txt`")
 
-# 初始化日志
+# Initialize logger
 logger = setup_logger("dashboard")
 
-# 应用标题和介绍
-st.title("📈 新闻趋势分析与主题建模仪表板")
+# Application title and introduction
+st.title("📈 News Trend Analysis and Topic Modeling Dashboard")
 st.markdown("""
 <div style="background-color:#f0f2f6;padding:20px;border-radius:10px;margin-bottom:20px;">
-<h4 style="color:#1f77b4;margin-top:0;">欢迎使用新闻趋势分析系统</h4>
-<p>本仪表板提供实时新闻数据的话题识别、情感分析和趋势追踪功能。</p>
+<h4 style="color:#1f77b4;margin-top:0;">Welcome to News Trend Analysis System</h4>
+<p>This dashboard provides real-time news data topic identification, sentiment analysis, and trend tracking.</p>
 <ul>
-<li><strong>话题建模</strong>: 自动识别新闻中的核心话题</li>
-<li><strong>情感分析</strong>: 分析新闻报道的情感倾向</li>
-<li><strong>趋势追踪</strong>: 可视化话题热度随时间变化</li>
-<li><strong>交互探索</strong>: 点击图表获取详细信息</li>
+<li><strong>Topic Modeling</strong>: Automatically identify core topics in news</li>
+<li><strong>Sentiment Analysis</strong>: Analyze emotional tendencies in news reports</li>
+<li><strong>Trend Tracking</strong>: Visualize topic popularity changes over time</li>
+<li><strong>Interactive Exploration</strong>: Click charts to get detailed information</li>
 </ul>
 </div>
 """, unsafe_allow_html=True)
 
-# 侧边栏配置
+# Sidebar configuration
 with st.sidebar:
-    st.header("⚙️ 控制面板")
+    st.header("⚙️ Control Panel")
     
-    # 数据源选择
+    # Data source selection
     data_source = st.selectbox(
-        "选择数据源",
-        ["示例数据", "实时数据", "自定义上传"],
-        help="选择要分析的数据来源"
+        "Select Data Source",
+        ["Sample Data", "Real-time Data", "Custom Upload"],
+        help="Select data source for analysis"
     )
     
-    # 时间范围选择
-    st.subheader("📅 时间范围")
+    # Time range selection
+    st.subheader("📅 Time Range")
     col1, col2 = st.columns(2)
     with col1:
         start_date = st.date_input(
-            "开始日期",
+            "Start Date",
             value=datetime.now() - timedelta(days=30),
             max_value=datetime.now()
         )
     with col2:
         end_date = st.date_input(
-            "结束日期",
+            "End Date",
             value=datetime.now(),
             min_value=start_date,
             max_value=datetime.now()
         )
     
-    # 话题数量选择
+    # Topic count selection
     topic_count = st.slider(
-        "显示话题数量",
+        "Display Topic Count",
         min_value=3,
         max_value=20,
         value=8,
-        help="控制显示的主要话题数量"
+        help="Control number of main topics to display"
     )
     
-    # 情感阈值设置
-    st.subheader("🎭 情感分析设置")
+    # Sentiment threshold setting
+    st.subheader("🎭 Sentiment Analysis Settings")
     sentiment_threshold = st.slider(
-        "情感强度阈值",
+        "Sentiment Intensity Threshold",
         min_value=0.0,
         max_value=1.0,
         value=0.3,
         step=0.1,
-        help="过滤掉情感强度低于此值的数据"
+        help="Filter out data with sentiment intensity below this value"
     )
     
-    # 分析按钮
+    # Analysis button
     st.markdown("---")
     analyze_button = st.button(
-        "🚀 开始分析",
+        "🚀 Start Analysis",
         type="primary",
         use_container_width=True
     )
     
     st.markdown("---")
     st.markdown("""
-    ### 📊 快速操作
-    - 📥 导入新数据
-    - 💾 保存当前视图
-    - 📤 导出分析报告
-    - 🔄 刷新数据
+    ### 📊 Quick Actions
+    - 📥 Import New Data
+    - 💾 Save Current View
+    - 📤 Export Analysis Report
+    - 🔄 Refresh Data
     """)
     
-    # 系统状态
+    # System status
     st.markdown("---")
-    st.caption("**系统状态**")
-    st.progress(75, text="数据加载: 75%")
-    st.caption(f"最后更新: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    st.caption("**System Status**")
+    st.progress(75, text="Data Loading: 75%")
+    st.caption(f"Last Update: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
 
-# 主内容区域
-tab1, tab2, tab3, tab4 = st.tabs(["📊 概览", "🎯 话题分析", "📈 趋势追踪", "📄 详细报告"])
+# Main content area
+tab1, tab2, tab3, tab4 = st.tabs(["📊 Overview", "🎯 Topic Analysis", "📈 Trend Tracking", "📄 Detailed Report"])
 
 with tab1:
-    st.header("数据概览")
+    st.header("Data Overview")
     
-    # 创建指标卡片
+    # Create metric cards
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.metric(
-            label="总文章数",
+            label="Total Articles",
             value="1,254",
-            delta="+42 (今日)",
+            delta="+42 (Today)",
             delta_color="normal"
         )
     
     with col2:
         st.metric(
-            label="识别话题数",
+            label="Identified Topics",
             value="8",
-            delta="-2 (昨日)",
+            delta="-2 (Yesterday)",
             delta_color="inverse"
         )
     
     with col3:
         st.metric(
-            label="平均情感",
+            label="Average Sentiment",
             value="+0.15",
             delta="+0.03",
             delta_color="normal"
@@ -154,30 +270,30 @@ with tab1:
     
     with col4:
         st.metric(
-            label="数据覆盖率",
+            label="Data Coverage",
             value="85%",
             delta="+5%",
             delta_color="normal"
         )
     
-    # 话题分布和情感趋势
-    st.subheader("话题分布与情感趋势")
+    # Topic distribution and sentiment trend
+    st.subheader("Topic Distribution and Sentiment Trend")
     
     col1, col2 = st.columns(2)
     
     with col1:
-        # 话题分布饼图
+        # Topic distribution pie chart
         topic_data = {
-            "话题": ["AI监管", "气候政策", "芯片竞争", "经济复苏", "医疗突破", "教育科技", "网络安全", "其他"],
-            "文章数": [320, 280, 240, 200, 160, 120, 80, 100]
+            "Topic": ["AI Regulation", "Climate Policy", "Chip Competition", "Economic Recovery", "Medical Breakthrough", "EdTech", "Cybersecurity", "Others"],
+            "Article Count": [320, 280, 240, 200, 160, 120, 80, 100]
         }
         df_topics = pd.DataFrame(topic_data)
         
         fig1 = px.pie(
             df_topics,
-            values='文章数',
-            names='话题',
-            title='话题分布',
+            values='Article Count',
+            names='Topic',
+            title='Topic Distribution',
             hole=0.3,
             color_discrete_sequence=px.colors.qualitative.Set3
         )
@@ -185,101 +301,101 @@ with tab1:
         st.plotly_chart(fig1, use_container_width=True)
     
     with col2:
-        # 情感趋势图
+        # Sentiment trend chart
         dates = pd.date_range(start_date, end_date, freq='D')
         sentiment_data = {
-            "日期": dates,
-            "情感分数": 0.3 + 0.4 * (pd.Series(range(len(dates))) / len(dates)) + 0.1 * np.random.randn(len(dates)),
-            "文章数": np.random.randint(30, 100, len(dates))
+            "Date": dates,
+            "Sentiment Score": 0.3 + 0.4 * (pd.Series(range(len(dates))) / len(dates)) + 0.1 * np.random.randn(len(dates)),
+            "Article Count": np.random.randint(30, 100, len(dates))
         }
         df_sentiment = pd.DataFrame(sentiment_data)
         
         fig2 = go.Figure()
         fig2.add_trace(go.Scatter(
-            x=df_sentiment["日期"],
-            y=df_sentiment["情感分数"],
+            x=df_sentiment["Date"],
+            y=df_sentiment["Sentiment Score"],
             mode='lines',
-            name='情感分数',
+            name='Sentiment Score',
             line=dict(color='royalblue', width=3),
             fill='tozeroy',
             fillcolor='rgba(65, 105, 225, 0.1)'
         ))
         
         fig2.update_layout(
-            title='情感趋势',
-            xaxis_title='日期',
-            yaxis_title='情感分数',
+            title='Sentiment Trend',
+            xaxis_title='Date',
+            yaxis_title='Sentiment Score',
             hovermode='x unified',
             template='plotly_white',
             height=400
         )
         st.plotly_chart(fig2, use_container_width=True)
     
-    # 实时数据预览
-    st.subheader("📰 实时新闻预览")
+    # Real-time data preview
+    st.subheader("📰 Real-time News Preview")
     
     sample_articles = [
         {
-            "标题": "欧盟通过新的人工智能监管法案",
-            "来源": "Reuters",
-            "时间": "2小时前",
-            "情感": "正面",
-            "话题": "AI监管"
+            "Title": "EU Passes New AI Regulation Bill",
+            "Source": "Reuters",
+            "Time": "2 hours ago",
+            "Sentiment": "Positive",
+            "Topic": "AI Regulation"
         },
         {
-            "标题": "全球芯片供应紧张局势缓解",
-            "来源": "华尔街日报",
-            "时间": "5小时前",
-            "情感": "中性",
-            "话题": "芯片竞争"
+            "Title": "Global Chip Supply Shortage Eases",
+            "Source": "Wall Street Journal",
+            "Time": "5 hours ago",
+            "Sentiment": "Neutral",
+            "Topic": "Chip Competition"
         },
         {
-            "标题": "气候峰会达成历史性减排协议",
-            "来源": "BBC",
-            "时间": "1天前",
-            "情感": "正面",
-            "话题": "气候政策"
+            "Title": "Historic Emission Reduction Agreement Reached at Climate Summit",
+            "Source": "BBC",
+            "Time": "1 day ago",
+            "Sentiment": "Positive",
+            "Topic": "Climate Policy"
         },
         {
-            "标题": "科技巨头发布季度财报",
-            "来源": "CNN",
-            "时间": "2天前",
-            "情感": "混合",
-            "话题": "经济复苏"
+            "Title": "Tech Giants Release Quarterly Earnings Reports",
+            "Source": "CNN",
+            "Time": "2 days ago",
+            "Sentiment": "Mixed",
+            "Topic": "Economic Recovery"
         }
     ]
     
     for article in sample_articles:
-        with st.expander(f"{article['标题']} ({article['来源']})"):
+        with st.expander(f"{article['Title']} ({article['Source']})"):
             col1, col2, col3 = st.columns(3)
             with col1:
-                st.metric("情感", article['情感'])
+                st.metric("Sentiment", article['Sentiment'])
             with col2:
-                st.metric("话题", article['话题'])
+                st.metric("Topic", article['Topic'])
             with col3:
-                st.metric("时间", article['时间'])
+                st.metric("Time", article['Time'])
             
-            if st.button(f"分析全文", key=f"btn_{article['标题'][:10]}"):
-                st.info(f"正在分析文章: {article['标题']}")
-                st.success("分析完成！关键实体: AI, 监管, 政策")
+            if st.button(f"Analyze Full Text", key=f"btn_{article['Title'][:10]}"):
+                st.info(f"Analyzing article: {article['Title']}")
+                st.success("Analysis complete! Key entities: AI, Regulation, Policy")
 
 with tab2:
-    st.header("话题详细分析")
+    st.header("Topic Detailed Analysis")
     
-    # 话题选择器
+    # Topic selector
     selected_topic = st.selectbox(
-        "选择要分析的话题",
-        ["AI监管与伦理", "气候变化政策", "全球芯片竞争", "经济复苏", "医疗科技创新", "教育数字化转型", "网络安全挑战"],
+        "Select topic to analyze",
+        ["AI Regulation & Ethics", "Climate Change Policy", "Global Chip Competition", "Economic Recovery", "Medical Tech Innovation", "Digital Education Transformation", "Cybersecurity Challenges"],
         index=0
     )
     
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        # 话题热度变化
-        st.subheader(f"话题热度趋势: {selected_topic}")
+        # Topic heat trend
+        st.subheader(f"Topic Heat Trend: {selected_topic}")
         
-        # 生成示例趋势数据
+        # Generate sample trend data
         days = 30
         dates = [start_date + timedelta(days=i) for i in range(days)]
         base_trend = np.linspace(0.3, 0.8, days)
@@ -287,31 +403,31 @@ with tab2:
         heat_scores = np.clip(base_trend + noise, 0, 1)
         
         trend_df = pd.DataFrame({
-            "日期": dates,
-            "热度分数": heat_scores,
-            "文章数量": np.random.randint(10, 50, days)
+            "Date": dates,
+            "Heat Score": heat_scores,
+            "Article Count": np.random.randint(10, 50, days)
         })
         
         fig_trend = px.line(
             trend_df,
-            x="日期",
-            y="热度分数",
-            title=f"{selected_topic} 热度趋势",
+            x="Date",
+            y="Heat Score",
+            title=f"{selected_topic} Heat Trend",
             markers=True
         )
         
-        # 添加文章数量柱状图
+        # Add article count bar chart
         fig_trend.add_trace(go.Bar(
-            x=trend_df["日期"],
-            y=trend_df["文章数量"],
-            name="文章数量",
+            x=trend_df["Date"],
+            y=trend_df["Article Count"],
+            name="Article Count",
             yaxis="y2",
             opacity=0.3
         ))
         
         fig_trend.update_layout(
             yaxis2=dict(
-                title="文章数量",
+                title="Article Count",
                 overlaying="y",
                 side="right"
             ),
@@ -321,12 +437,12 @@ with tab2:
         st.plotly_chart(fig_trend, use_container_width=True)
     
     with col2:
-        # 话题统计信息
-        st.subheader("话题统计")
+        # Topic statistics
+        st.subheader("Topic Statistics")
         
         stats_data = {
-            "指标": ["总文章数", "平均情感", "峰值热度", "持续时间", "相关话题数", "媒体覆盖率"],
-            "数值": ["320篇", "+0.25", "0.89", "15天", "3个", "87%"]
+            "Metric": ["Total Articles", "Average Sentiment", "Peak Heat", "Duration", "Related Topics", "Media Coverage"],
+            "Value": ["320 articles", "+0.25", "0.89", "15 days", "3 topics", "87%"]
         }
         
         st.dataframe(
@@ -335,17 +451,17 @@ with tab2:
             hide_index=True
         )
         
-        # 话题关键词
-        st.subheader("🔑 关键词云")
+        # Topic keywords
+        st.subheader("🔑 Keyword Cloud")
         
-        if selected_topic == "AI监管与伦理":
-            keywords = ["AI", "监管", "伦理", "算法", "透明度", "责任", "政策", "法案", "合规", "治理"]
-        elif selected_topic == "气候变化政策":
-            keywords = ["气候", "环保", "减排", "能源", "可持续", "碳", "绿色", "政策", "协议", "生态"]
+        if selected_topic == "AI Regulation & Ethics":
+            keywords = ["AI", "Regulation", "Ethics", "Algorithm", "Transparency", "Responsibility", "Policy", "Bill", "Compliance", "Governance"]
+        elif selected_topic == "Climate Change Policy":
+            keywords = ["Climate", "Environment", "Emission Reduction", "Energy", "Sustainable", "Carbon", "Green", "Policy", "Agreement", "Ecology"]
         else:
-            keywords = ["技术", "创新", "发展", "市场", "竞争", "投资", "战略", "未来", "挑战", "机遇"]
+            keywords = ["Technology", "Innovation", "Development", "Market", "Competition", "Investment", "Strategy", "Future", "Challenge", "Opportunity"]
         
-        # 创建关键词展示
+        # Create keyword display
         keyword_html = "<div style='line-height:2.5;'>"
         for kw in keywords:
             size = np.random.randint(14, 24)
@@ -355,14 +471,14 @@ with tab2:
         
         st.markdown(keyword_html, unsafe_allow_html=True)
     
-    # 相关文章列表
-    st.subheader("📄 相关文章")
+    # Related articles list
+    st.subheader("📄 Related Articles")
     
     related_articles = [
-        {"title": f"关于{selected_topic}的最新研究进展", "source": "Science Daily", "date": "2024-01-15", "sentiment": 0.6},
-        {"title": f"专家解读{selected_topic}的未来趋势", "source": "Tech Review", "date": "2024-01-12", "sentiment": 0.4},
-        {"title": f"政策制定者讨论{selected_topic}实施方案", "source": "Policy Journal", "date": "2024-01-10", "sentiment": 0.2},
-        {"title": f"企业如何应对{selected_topic}带来的挑战", "source": "Business Weekly", "date": "2024-01-08", "sentiment": 0.3},
+        {"title": f"Latest Research Progress on {selected_topic}", "source": "Science Daily", "date": "2024-01-15", "sentiment": 0.6},
+        {"title": f"Expert Interpretation of {selected_topic} Future Trends", "source": "Tech Review", "date": "2024-01-12", "sentiment": 0.4},
+        {"title": f"Policy Makers Discuss {selected_topic} Implementation Plan", "source": "Policy Journal", "date": "2024-01-10", "sentiment": 0.2},
+        {"title": f"How Enterprises Respond to Challenges Brought by {selected_topic}", "source": "Business Weekly", "date": "2024-01-08", "sentiment": 0.3},
     ]
     
     for i, article in enumerate(related_articles):
@@ -370,25 +486,25 @@ with tab2:
             col1, col2, col3 = st.columns([3, 1, 1])
             with col1:
                 st.write(f"**{article['title']}**")
-                st.caption(f"来源: {article['source']} | 日期: {article['date']}")
+                st.caption(f"Source: {article['source']} | Date: {article['date']}")
             with col2:
                 sentiment_color = "green" if article['sentiment'] > 0 else "red" if article['sentiment'] < 0 else "gray"
-                st.markdown(f"<span style='color:{sentiment_color};'>情感: {article['sentiment']:+.2f}</span>", unsafe_allow_html=True)
+                st.markdown(f"<span style='color:{sentiment_color};'>Sentiment: {article['sentiment']:+.2f}</span>", unsafe_allow_html=True)
             with col3:
-                if st.button("查看详情", key=f"detail_{i}"):
+                if st.button("View Details", key=f"detail_{i}"):
                     st.session_state[f"show_detail_{i}"] = not st.session_state.get(f"show_detail_{i}", False)
             
             if st.session_state.get(f"show_detail_{i}", False):
-                st.info(f"这是关于{selected_topic}的详细分析文章，讨论了当前的热点问题和未来发展方向。")
+                st.info(f"This is a detailed analysis article about {selected_topic}, discussing current hot issues and future development directions.")
             st.divider()
 
 with tab3:
-    st.header("趋势追踪与预测")
+    st.header("Trend Tracking and Prediction")
     
-    # 多话题对比
-    st.subheader("多话题热度对比")
+    # Multi-topic comparison
+    st.subheader("Multi-topic Heat Comparison")
     
-    topics_comparison = ["AI监管", "气候政策", "芯片竞争", "经济复苏", "医疗突破"]
+    topics_comparison = ["AI Regulation", "Climate Policy", "Chip Competition", "Economic Recovery", "Medical Breakthrough"]
     comparison_data = []
     
     for topic in topics_comparison:
@@ -400,45 +516,45 @@ with tab3:
         
         for i, val in enumerate(values):
             comparison_data.append({
-                "日期": start_date + timedelta(days=i),
-                "热度": val,
-                "话题": topic
+                "Date": start_date + timedelta(days=i),
+                "Heat": val,
+                "Topic": topic
             })
     
     df_comparison = pd.DataFrame(comparison_data)
     
     fig_comparison = px.line(
         df_comparison,
-        x="日期",
-        y="热度",
-        color="话题",
-        title="多话题热度对比",
+        x="Date",
+        y="Heat",
+        color="Topic",
+        title="Multi-topic Heat Comparison",
         line_shape="spline"
     )
     
     st.plotly_chart(fig_comparison, use_container_width=True)
     
-    # 预测分析
-    st.subheader("📈 趋势预测")
+    # Prediction analysis
+    st.subheader("📈 Trend Prediction")
     
     col1, col2 = st.columns(2)
     
     with col1:
         st.markdown("""
-        ### 未来7天预测
-        - **AI监管**: ↗ 上升趋势 (置信度: 85%)
-        - **气候政策**: → 保持稳定 (置信度: 75%)
-        - **芯片竞争**: ↘ 下降趋势 (置信度: 70%)
-        - **经济复苏**: ↗ 缓慢上升 (置信度: 65%)
+        ### Next 7 Days Prediction
+        - **AI Regulation**: ↗ Rising Trend (Confidence: 85%)
+        - **Climate Policy**: → Stable (Confidence: 75%)
+        - **Chip Competition**: ↘ Declining Trend (Confidence: 70%)
+        - **Economic Recovery**: ↗ Slowly Rising (Confidence: 65%)
         """)
     
     with col2:
-        # 预测图表
+        # Prediction chart
         future_dates = [end_date + timedelta(days=i) for i in range(1, 8)]
         predictions = {
-            "AI监管": [0.7, 0.72, 0.75, 0.77, 0.78, 0.79, 0.8],
-            "气候政策": [0.6, 0.61, 0.61, 0.62, 0.62, 0.63, 0.63],
-            "芯片竞争": [0.5, 0.49, 0.48, 0.47, 0.46, 0.45, 0.44]
+            "AI Regulation": [0.7, 0.72, 0.75, 0.77, 0.78, 0.79, 0.8],
+            "Climate Policy": [0.6, 0.61, 0.61, 0.62, 0.62, 0.63, 0.63],
+            "Chip Competition": [0.5, 0.49, 0.48, 0.47, 0.46, 0.45, 0.44]
         }
         
         fig_predict = go.Figure()
@@ -452,129 +568,129 @@ with tab3:
             ))
         
         fig_predict.update_layout(
-            title="话题热度预测",
-            xaxis_title="日期",
-            yaxis_title="预测热度",
+            title="Topic Heat Prediction",
+            xaxis_title="Date",
+            yaxis_title="Predicted Heat",
             template="plotly_white"
         )
         
         st.plotly_chart(fig_predict, use_container_width=True)
 
 with tab4:
-    st.header("分析报告")
+    st.header("Analysis Report")
     
-    # 报告生成选项
+    # Report generation options
     col1, col2, col3 = st.columns(3)
     
     with col1:
         report_type = st.selectbox(
-            "报告类型",
-            ["日报", "周报", "月报", "专题报告"]
+            "Report Type",
+            ["Daily Report", "Weekly Report", "Monthly Report", "Special Report"]
         )
     
     with col2:
         report_format = st.selectbox(
-            "导出格式",
+            "Export Format",
             ["HTML", "PDF", "Markdown", "Word"]
         )
     
     with col3:
-        include_charts = st.checkbox("包含图表", value=True)
-        include_data = st.checkbox("包含原始数据", value=False)
+        include_charts = st.checkbox("Include Charts", value=True)
+        include_data = st.checkbox("Include Raw Data", value=False)
     
-    # 生成报告按钮
-    if st.button("📄 生成分析报告", type="primary", use_container_width=True):
-        with st.spinner("正在生成报告..."):
-            # 模拟报告生成过程
+    # Generate report button
+    if st.button("📄 Generate Analysis Report", type="primary", use_container_width=True):
+        with st.spinner("Generating report..."):
+            # Simulate report generation process
             import time
             time.sleep(2)
             
-            # 显示报告预览
-            st.success("报告生成成功！")
+            # Display report preview
+            st.success("Report generated successfully!")
             
-            # 报告内容
-            st.subheader("报告预览")
+            # Report content
+            st.subheader("Report Preview")
             
             report_content = f"""
-            # 新闻趋势分析报告
-            **报告类型**: {report_type}
-            **生成时间**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-            **分析时段**: {start_date} 至 {end_date}
+            # News Trend Analysis Report
+            **Report Type**: {report_type}
+            **Generation Time**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+            **Analysis Period**: {start_date} to {end_date}
             
-            ## 执行摘要
-            在分析期间，系统共处理了1,254篇新闻文章，识别出8个核心话题。整体情感倾向为略微正面(+0.15)。
+            ## Executive Summary
+            During the analysis period, the system processed 1,254 news articles and identified 8 core topics. The overall sentiment tendency is slightly positive (+0.15).
             
-            ## 核心发现
-            1. **AI监管话题热度持续上升**，在欧盟法案通过后热度增长45%
-            2. **气候政策话题情感最为积极**，平均情感分数达+0.60
-            3. **芯片竞争话题呈现地区性差异**，不同地区报道角度不同
+            ## Key Findings
+            1. **AI regulation topic heat continues to rise**, with 45% growth after EU bill passage
+            2. **Climate policy topic has the most positive sentiment**, average sentiment score reaches +0.60
+            3. **Chip competition topic shows regional differences**, different reporting angles across regions
             
-            ## 详细分析
-            ### 1. 话题分布
-            - AI监管与伦理: 320篇文章 (25.5%)
-            - 气候变化政策: 280篇文章 (22.3%)
-            - 全球芯片竞争: 240篇文章 (19.1%)
-            - 其他话题: 414篇文章 (33.0%)
+            ## Detailed Analysis
+            ### 1. Topic Distribution
+            - AI Regulation & Ethics: 320 articles (25.5%)
+            - Climate Change Policy: 280 articles (22.3%)
+            - Global Chip Competition: 240 articles (19.1%)
+            - Other topics: 414 articles (33.0%)
             
-            ### 2. 情感分析
-            - 整体平均情感: +0.15
-            - 正面文章比例: 42%
-            - 负面文章比例: 28%
-            - 中性文章比例: 30%
+            ### 2. Sentiment Analysis
+            - Overall average sentiment: +0.15
+            - Positive article proportion: 42%
+            - Negative article proportion: 28%
+            - Neutral article proportion: 30%
             
-            ### 3. 趋势预测
-            预计未来一周AI监管话题热度将继续上升，而芯片竞争话题可能降温。
+            ### 3. Trend Prediction
+            It is expected that AI regulation topic heat will continue to rise in the next week, while chip competition topic may cool down.
             
-            ## 建议
-            1. 持续关注AI监管政策的后续发展
-            2. 加强对气候政策相关投资机会的研究
-            3. 监控芯片供应链的变化对行业的影响
+            ## Recommendations
+            1. Continue to monitor follow-up developments of AI regulation policies
+            2. Strengthen research on investment opportunities related to climate policies
+            3. Monitor the impact of chip supply chain changes on the industry
             
             ---
-            *本报告由新闻趋势分析系统自动生成*
+            *This report is automatically generated by the News Trend Analysis System*
             """
             
             st.markdown(report_content)
             
-            # 导出选项
+            # Export options
             st.download_button(
-                label="📥 下载报告",
+                label="📥 Download Report",
                 data=report_content,
                 file_name=f"news_analysis_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md",
                 mime="text/markdown"
             )
 
-# 页脚
+# Footer
 st.markdown("---")
 footer_col1, footer_col2, footer_col3 = st.columns(3)
 with footer_col1:
-    st.caption("© 2024 新闻趋势分析系统")
+    st.caption("© 2024 News Trend Analysis System")
 with footer_col2:
-    st.caption("版本: v1.0.0")
+    st.caption("Version: v1.0.0")
 with footer_col3:
-    st.caption("[查看源代码](https://github.com/yourusername/news-trend-analysis)")
+    st.caption("[View Source Code](https://github.com/yourusername/news-trend-analysis)")
 
-# 添加一些样式
+# Add some styles
 st.markdown("""
 <style>
-    /* 主标题样式 */
+    /* Main title style */
     .stTitle {
         color: #1f77b4;
     }
     
-    /* 侧边栏样式 */
+    /* Sidebar style */
     .css-1d391kg {
         background-color: #f8f9fa;
     }
     
-    /* 按钮样式 */
+    /* Button style */
     .stButton > button {
         width: 100%;
         border-radius: 5px;
         font-weight: bold;
     }
     
-    /* 指标卡片样式 */
+    /* Metric card style */
     .stMetric {
         background-color: white;
         padding: 10px;
@@ -582,7 +698,7 @@ st.markdown("""
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
-    /* 标签页激活状态 */
+    /* Tab active state */
     .stTabs [data-baseweb="tab-list"] {
         gap: 2px;
     }
@@ -604,14 +720,14 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 会话状态初始化
+# Session state initialization
 if 'data_loaded' not in st.session_state:
     st.session_state.data_loaded = False
     st.session_state.analysis_results = None
 
-# 运行分析
+# Run analysis
 if analyze_button:
-    with st.spinner("正在分析数据..."):
+    with st.spinner("Analyzing data..."):
         import time
         progress_bar = st.progress(0)
         
@@ -621,16 +737,16 @@ if analyze_button:
         
         st.session_state.data_loaded = True
         st.session_state.analysis_results = {
-            "topics": ["AI监管", "气候政策", "芯片竞争"],
+            "topics": ["AI Regulation", "Climate Policy", "Chip Competition"],
             "sentiment": 0.15,
             "articles_analyzed": 1254
         }
         
-        st.success("分析完成！")
+        st.success("Analysis complete!")
         st.rerun()
 
 if __name__ == "__main__":
-    # 在开发环境中，Streamlit会自动运行此脚本
-    # 这里可以添加一些开发时的特定代码
-    if st.secrets.get("ENV") == "development":
-        st.sidebar.info("开发模式")
+    # In development environment, Streamlit automatically runs this script
+    # Development-specific code can be added here
+    generate_demo_results()
+       
