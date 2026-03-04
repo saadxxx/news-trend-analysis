@@ -1,5 +1,5 @@
 """
-文本预处理管道：分词、词形还原、去除停用词等。
+Text preprocessing pipeline: tokenization, lemmatization, stop word removal, etc.
 """
 import nltk
 from nltk.tokenize import word_tokenize
@@ -11,32 +11,32 @@ import logging
 logger = logging.getLogger(__name__)
 
 class TextPreprocessor:
-    """文本预处理类，包含完整NLP预处理流程"""
+    """Text preprocessing class with complete NLP preprocessing pipeline"""
     
     def __init__(self, language: str = 'english'):
         """
-        初始化预处理器
+        Initialize the preprocessor
         
-        参数:
-            language: 文本语言 ('english', 'french', 'spanish'等)
+        Args:
+            language: Text language ('english', 'french', 'spanish', etc.)
         """
         self.language = language
         self.lemmatizer = WordNetLemmatizer()
         
-        # 下载必要的NLTK数据
+        # Download necessary NLTK data
         try:
             nltk.data.find('tokenizers/punkt')
             nltk.data.find('corpora/stopwords')
             nltk.data.find('corpora/wordnet')
         except LookupError:
-            logger.info("下载NLTK数据...")
+            logger.info("Downloading NLTK data...")
             nltk.download('punkt', quiet=True)
             nltk.download('stopwords', quiet=True)
             nltk.download('wordnet', quiet=True)
         
-        # 获取停用词列表
+        # Get stop words list
         self.stop_words = set(stopwords.words(language))
-        # 可添加自定义停用词
+        # Can add custom stop words
         self.custom_stopwords = {'said', 'would', 'could', 'also', 'like'}
         self.stop_words.update(self.custom_stopwords)
     
@@ -45,59 +45,59 @@ class TextPreprocessor:
                    lemmatize: bool = True,
                    min_word_length: int = 2) -> List[str]:
         """
-        预处理单个文本
+        Preprocess a single text
         
-        参数:
-            text: 输入文本
-            remove_stopwords: 是否移除停用词
-            lemmatize: 是否进行词形还原
-            min_word_length: 保留的最小词长
+        Args:
+            text: Input text
+            remove_stopwords: Whether to remove stop words
+            lemmatize: Whether to perform lemmatization
+            min_word_length: Minimum word length to keep
             
-        返回:
-            List[str]: 预处理后的词元列表
+        Returns:
+            List[str]: List of preprocessed tokens
         """
         if not text:
             return []
         
-        # 1. 分词
+        # 1. Tokenization
         tokens = word_tokenize(text.lower())
         
-        # 2. 移除标点符号和数字（只保留字母）
+        # 2. Remove punctuation and numbers (keep only letters)
         tokens = [token for token in tokens if token.isalpha()]
         
-        # 3. 移除短词
+        # 3. Remove short words
         tokens = [token for token in tokens if len(token) >= min_word_length]
         
-        # 4. 移除停用词
+        # 4. Remove stop words
         if remove_stopwords:
             tokens = [token for token in tokens if token not in self.stop_words]
         
-        # 5. 词形还原
+        # 5. Lemmatization
         if lemmatize:
             tokens = [self.lemmatizer.lemmatize(token) for token in tokens]
         
         return tokens
     
     def preprocess_batch(self, texts: List[str], **kwargs) -> List[List[str]]:
-        """批量预处理文本"""
+        """Batch preprocess texts"""
         return [self.preprocess(text, **kwargs) for text in texts]
     
     def get_preprocessed_text(self, text: str, **kwargs) -> str:
-        """返回预处理后的字符串（而非词元列表）"""
+        """Return preprocessed string (not token list)"""
         tokens = self.preprocess(text, **kwargs)
         return ' '.join(tokens)
     
 
-# 使用示例
+# Usage example
 if __name__ == "__main__":
     preprocessor = TextPreprocessor(language='english')
     
     sample_text = "The quick brown foxes are jumping over the lazy dogs. They're having fun!"
     
-    # 获取词元列表
+    # Get token list
     tokens = preprocessor.preprocess(sample_text)
-    print(f"词元列表: {tokens}")
+    print(f"Token list: {tokens}")
     
-    # 获取预处理后的文本字符串
+    # Get preprocessed text string
     processed_text = preprocessor.get_preprocessed_text(sample_text)
-    print(f"处理后的文本: {processed_text}")
+    print(f"Processed text: {processed_text}")
