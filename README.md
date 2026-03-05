@@ -117,48 +117,32 @@ streamlit run src/visualization/app.py
 
 🎯 Project Demo
 
-## 📊 可视化结果示例
+📊 Visualization Results Examples
 
-### 主题词云
-![主题词云](docs/images/wordcloud.png)
-*基于2025年1月新闻数据生成的主题词云，显示AI、监管、气候等高频话题*
+Topic Word Cloud
 
-### 趋势热力图
-![趋势热力图](docs/images/trend_heatmap.png)
-*话题热度随时间变化的热力图，颜色越深表示讨论热度越高*
+!docs/images/wordcloud.png  
+Topic word cloud generated based on January 2024 news data, showing high-frequency topics such as AI, regulation, climate, etc.  
 
-### 情感时间线
-![情感时间线](docs/images/sentiment_timeline.png)
-*新闻情感分数随时间变化趋势，蓝色线为情感分数，橙色柱为文章数量*
+Trend Heatmap
 
-### 话题分布
-![话题分布](docs/images/topic_distribution.png)
-*话题分布气泡图，大小表示文章数量，颜色表示平均情感（红负绿正）*
+!docs/images/trend_heatmap.png  
+Heatmap of topic trends over time, with darker colors indicating higher discussion intensity  
 
-### 仪表板预览
-![仪表板预览](docs/images/dashboard_preview.png)
-*Streamlit交互式仪表板布局预览*
+Sentiment Analysis
 
-## 📈 示例分析结论
+!docs/images/sentiment_analysis.png  
 
-以下是对2024年1月国际新闻数据的自动分析示例：
+📈 Example Analysis Conclusions
 
-**核心发现：**
-1. **主导话题**: AI监管与伦理（320篇文章，热度上升45%）
-2. **情感倾向**: 整体略微正面（+0.15），气候话题最积极（+0.60）
-3. **关键事件**: 欧盟AI法案通过引发监管话题热度峰值
-4. **趋势变化**: 芯片竞争话题情感在1月5日后转为显著负面
+The following is an automated analysis example based on international news data from January 2024:  
 
-**详细分析报告**: [查看完整示例报告](docs/demo_results/text_conclusions.md)
+Key Findings:  
+1. Dominant Topic: AI Regulation and Ethics (320 articles, 45% increase in popularity)  
+2. Sentiment Trend: Slightly positive overall (+0.15), with climate topics being the most positive (+0.60)  
+3. Key Event: The adoption of the EU AI Act triggered a peak in regulatory discussion  
+4. Trend Change: Sentiment toward chip competition topics turned significantly negative after January 5th
 
-## 🎥 交互演示
-![仪表板演示](docs/images/dashboard_demo.gif)
-*实际Streamlit应用的交互演示 - 选择话题、调整时间范围、查看详细分析*
-
-Sample Output
-
-!docs/images/dashboard_screenshot.png
-Interactive dashboard showing topic trends over time
 
 Key Findings from Analysis
 
