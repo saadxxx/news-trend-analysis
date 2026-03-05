@@ -130,6 +130,9 @@ streamlit run src/visualization/app.py
 ###Sentiment Analysis
 ![Sentiment Analysis](docs/images/sentiment_analysis.png)  
 
+###Daily Trends Analysis
+![Daily Trends Analysis](docs/images/daily_trends_analysis.png)
+
 📈 Example Analysis Conclusions
 
 The following is an automated analysis example based on international news data from January 2024:  
