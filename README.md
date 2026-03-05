@@ -119,19 +119,16 @@ streamlit run src/visualization/app.py
 
 📊 Visualization Results Examples
 
-Topic Word Cloud
+###Topic Word Cloud
+!(docs/images/wordcloud.png ) 
+*Topic word cloud generated based on January 2024 news data, showing high-frequency topics such as AI, regulation, climate, etc.  *
 
-!docs/images/wordcloud.png  
-Topic word cloud generated based on January 2024 news data, showing high-frequency topics such as AI, regulation, climate, etc.  
+###Trend Heatmap
+!(docs/images/trend_heatmap.png)  
+*Heatmap of topic trends over time, with darker colors indicating higher discussion intensity  *
 
-Trend Heatmap
-
-!docs/images/trend_heatmap.png  
-Heatmap of topic trends over time, with darker colors indicating higher discussion intensity  
-
-Sentiment Analysis
-
-!docs/images/sentiment_analysis.png  
+###Sentiment Analysis
+!(docs/images/sentiment_analysis.png)  
 
 📈 Example Analysis Conclusions
 
